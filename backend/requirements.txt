@@ -3,3 +3,4 @@ flask-cors==4.0.0
 SQLAlchemy==2.0.25
 google-api-python-client
 google-genai
+gunicorn==23.0.0

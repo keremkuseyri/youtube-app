@@ -1,9 +1,9 @@
 import os
 
 class Config:
-    YT_API_KEY = os.getenv("YT_API_KEY", "AIzaSyCe_POTISdJFdUeSuKNUP7_MQFTmqwPUbE")
-    GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "AIzaSyAnRiOeJ598q3ZxaU-dKkXwAXz_0RZgqco")
-    GROQ_API_KEY =os.getenv("GROQ_API_KEY", "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")
+    YT_API_KEY = os.getenv("YT_API_KEY", "")
+    GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "")
+    GROQ_API_KEY = os.getenv("GROQ_API_KEY", "")
     AI_MODEL = os.getenv("AI_MODEL", "models/gemini-flash-lite-latest")
     AI_FALLBACK_MODELS = [
         model.strip()
