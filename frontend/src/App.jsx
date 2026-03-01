@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { searchVideos } from "./api";
-import VideoCard from "./components/Videocard";
+import VideoCard from "./components/VideoCard";
 import "./App.css";
 
 export default function App() {
