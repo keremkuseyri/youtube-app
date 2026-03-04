@@ -90,7 +90,6 @@ Frontend calls backend using `VITE_API_BASE_URL` when provided; otherwise it fal
 - [ ] Hide debug-only fields (`aiError`, model metadata) in production responses
 - [ ] Restrict CORS to frontend domains only
 - [ ] Add request validation and consistent API error format
-- [ ] Rotate and audit all leaked/old API keys
 
 ## Phase 2 — Performance and scale
 
