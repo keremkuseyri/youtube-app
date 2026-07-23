@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: youtube-app-backend
+    env: python
+    buildCommand: cd backend && pip install -r requirements.txt
+    startCommand: cd backend && gunicorn app:app
+    envVars:
+      - key: YT_API_KEY
+      - key: GROQ_API_KEY
+      - key: PORT
+        value: "5000"
