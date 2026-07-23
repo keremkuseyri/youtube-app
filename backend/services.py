@@ -268,9 +268,11 @@ def search_videos(query):
     )
 
     batch_prompt = (
-        "Score these YouTube videos from 1-10 for educational quality. "
-        "Return ONLY one item per line in format video_id:score. "
-        "No extra text, no explanation.\n"
+        "You are an educational content expert. Score these YouTube videos from 1-10 "
+        "for their EDUCATIONAL VALUE only (clarity, depth, teaching quality, accuracy).\n"
+        "Format: 'video_id:score' on each line, nothing else.\n"
+        "Examples of high scores (8-10): tutorials, lectures, scientific explanations, step-by-step guides.\n"
+        "Examples of low scores (1-3): pranks, vlogs, reactions, clickbait.\n\n"
         f"Videos:\n{prompt_items}"
     )
 
@@ -292,7 +294,7 @@ def search_videos(query):
         except Exception as exc:
             ai_scores_by_id = {}
             ai_error_message = str(exc)
-            logger.warning("AI scoring failed after retries: %s", ai_error_message)
+            logger.warning("Groq AI scoring failed after retries: %s", ai_error_message)
 
     ranked_results = []
     for video in videos:
