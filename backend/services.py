@@ -219,16 +219,16 @@ def _extract_scores(response_text, expected_count):
 
 
 def _extract_scores_by_video_id(response_text, valid_video_ids):
+    # Match video IDs (11 chars) or longer alphanumeric strings followed by :score
     pattern = re.compile(
-        r"([A-Za-z0-9_-]{6,}):\s*(10(?:\.0+)?|[0-9](?:\.\d+)?)"
+        r"([A-Za-z0-9_-]{11,}):\s*(10(?:\.0+)?|[0-9](?:\.\d+)?)"
     )
     valid_ids = set(valid_video_ids)
     parsed = {}
 
     for video_id, raw_score in pattern.findall(response_text or ""):
-        if video_id not in valid_ids:
-            continue
-        parsed[video_id] = f"{max(0.0, min(10.0, _to_float_score(raw_score))):.1f}"
+        if video_id in valid_ids:
+            parsed[video_id] = f"{max(0.0, min(10.0, _to_float_score(raw_score))):.1f}"
 
     return parsed
 
@@ -284,10 +284,14 @@ def search_videos(query):
         try:
             response, ai_model_used = gemini_generate_with_backoff(batch_prompt)
             response_text = response.choices[0].message.content if response.choices else ""
+            logger.info(f"AI raw response: {response_text}")
+            
             ai_scores_by_id = _extract_scores_by_video_id(response_text, [v["id"] for v in videos])
+            logger.info(f"Parsed scores by ID: {ai_scores_by_id}")
 
             if len(ai_scores_by_id) < len(videos):
                 scores = _extract_scores(response_text, len(videos))
+                logger.info(f"Fallback scores: {scores}")
                 for idx, video in enumerate(videos):
                     if video["id"] not in ai_scores_by_id and idx < len(scores):
                         ai_scores_by_id[video["id"]] = _safe_score_text(scores[idx])
